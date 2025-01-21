@@ -63,19 +63,14 @@ def load_test_data(testset, llm_type):
 if __name__ == '__main__':
     testset = 40
     experiment_type = 'test'
-    model_type = 'rf'
-    llm_type = '3b'
+    llm_type = '7b'
     if experiment_type == 'train':
         x_train, y_train = load_train_data(llm_type)
-        if model_type == 'rf':
-            model = train_RandomForest(x_train, y_train)
-            save_model(model, model_type  + '_' + llm_type + '.pkl')
-        elif model_type == 'lr':
-            model = train_LogisticRegression(x_train, y_train)
-            save_model(model, model_type + '_' + llm_type + '.pkl')
+        model = train_RandomForest(x_train, y_train)
+        save_model(model,  'rf_' + llm_type + '.pkl')
     elif experiment_type == 'test':
         x_test, y_test = load_test_data(testset, llm_type)
-        model = load_model(model_type + '_' + llm_type + '.pkl')
+        model = load_model('rf_' + llm_type + '.pkl')
         y_pred = model.predict(x_test)
         from sklearn.metrics import confusion_matrix, accuracy_score
 
