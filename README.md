@@ -10,6 +10,7 @@ We develop the codes on Windows operation system, and run the codes on Ubuntu 20
 
 ### 1. Estimate the target LLM uncertainty based on the BLoB project.
 To accomplish our goal, we modified `my_bayesian_peft/run/main.py`.
+    
      cd my_bayesian_peft
      bash scripts/my_script.sh
 
