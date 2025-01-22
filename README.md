@@ -24,7 +24,7 @@ Fine-tuning target LLM:
      do
          CUDA_VISIBLE_DEVICES=0 python3 run/main.py --dataset-type mcdataset --dataset $dataset --model-type causallm \
          --model openlm-research/open_llama_7b --modelwrapper mcdropout --lr 1e-4 --batch-size 4  --opt adamw --warmup-ratio 0.06 \
-         --max-seq-len 300  --nowand --load-model-path /opt/data/private/LHD_LLM/LLM_uncertainty/my_llm/openlm-research/open_llama_7b \
+         --max-seq-len 300  --nowand --load-model-path ./my_llm/openlm-research/open_llama_7b \
          --apply-classhead-lora --lora-r 8 --lora-alpha 16 --lora-dropout 0.1  \
           --checkpoint --checkpoint-dic-name epoch$epoch/open_llama_7b-1 --seed $epoch --n-epochs $epoch
      done
@@ -47,8 +47,8 @@ Inference:
 Hyperparameters:
 
      Target LLM: openlm-research/open_llama_7b, openlm-research/open_llama_3b, meta-llama/Llama-2-7b, huggyllama/llama-7b
-     dataset: 'bookmia_bonlyseen_10'  bonlyseen: no seen files,  10: $N_unseen = 10$
-              'bookmia_base10_test10' base10: few seen files,  test10: $N_unseen = 4$
+     dataset: 'bookmia_bonlyseen_10'  bonlyseen: no seen files,  10: $N_unseen = 10$, 20: $N_unseen = 20$, 30: $N_unseen = 30$, 40: $N_unseen = 40$
+              'bookmia_base10_test10' base10: few seen files,  test10: $N_unseen = 4$, test32: $N_unseen = 13$, test55: $N_unseen = 22$, test77: $N_unseen = 31$
      modelwrapper: uncertainty estimation method.
                'mcdropout': MCD, 'blob': BLoB, 'deepensemble': Ensemble
 
