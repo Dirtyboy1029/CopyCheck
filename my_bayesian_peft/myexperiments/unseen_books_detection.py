@@ -121,53 +121,6 @@ def detect_base_book(thr=0.8,
     print(f"False Negatives (fn): {fn} (Books incorrectly identified as 'seen' but were 'unseen') / {fn + tp}")
     print(f"True Positives (tp): {tp} (Books correctly identified as 'seen') / {fn + tp}")
 
-def detect_test_book(thr=0.6,
-                         llm_type='open_llama_3b',
-                         noise_type='test',
-                         noise_ratio='seen10',
-                         detection_algorithm_type='gmm'):
-
-    noise_bookmia_data = read_local_file(file_path=f'../database/bookmia_{noise_type}_{noise_ratio}.jsonl')
-    noise_label = np.array([item['label'] for item in noise_bookmia_data])[0:(len(noise_bookmia_data) // 4) * 4]
-    suspect_seen_index = np.where(noise_label == 1)[0]
-    suspect_book = set([noise_bookmia_data[index]['book'] for index in suspect_seen_index])
-    suspect_books = merge_bookname(noise_bookmia_data)
-    conf = read_joblib('../database/config/' + 'bookid_' + noise_type + '_' + str(noise_ratio) + '.conf')
-    suspected_seen_ids = conf['suspected_seen_id']
-    suspected_unseen_ids = conf['suspected_unseen_id']
-    seen_book = []
-    unseen_book = []
-    for item in suspect_book:
-        if suspect_books[item][0]['book_id'] in suspected_seen_ids:
-            seen_book.append(item)
-        else:
-            unseen_book.append(item)
-    label_error_mask = np.load(os.path.join(f'label_error_masks/anomaly_detection/{llm_type}',
-                                            f'{detection_algorithm_type}_{noise_type}_{noise_ratio}.npy'))
-    #print(list(label_error_mask))
-    #print(np.sum(label_error_mask))
-    for i, index in enumerate(suspect_seen_index):
-        if label_error_mask[i] == 0:
-            noise_bookmia_data[index]['label'] = 0
-    detection_book = merge_bookname(noise_bookmia_data)
-    gt_book_labels = list(np.ones(len(seen_book))) + list(np.zeros(len(unseen_book)))
-    print(gt_book_labels)
-    detection_book_labels = []
-    for i, key in enumerate(seen_book + unseen_book):
-        if sum([item['label'] for item in detection_book[key]]) / len(detection_book[key]) > thr:
-            detection_book_labels.append(0)
-        else:
-            detection_book_labels.append(1)
-    from sklearn.metrics import confusion_matrix, accuracy_score
-    balanced_accuracy = accuracy_score(gt_book_labels, detection_book_labels)
-
-    MSG = "The  accuracy on the dataset is {:.5f}%"
-    print(MSG.format(balanced_accuracy * 100))
-    tn, fp, fn, tp = confusion_matrix(gt_book_labels, detection_book_labels).ravel()
-    print(f"True Negatives (tn): {tn} (Books correctly identified as 'unseen') / {tn + fp}")
-    print(f"False Positives (fp): {fp} (Books incorrectly identified as 'unseen' but were 'seen') / {tn + fp}")
-    print(f"False Negatives (fn): {fn} (Books incorrectly identified as 'seen' but were 'unseen') / {fn + tp}")
-    print(f"True Positives (tp): {tp} (Books correctly identified as 'seen') / {fn + tp}")
 
 if __name__ == '__main__':
     import argparse
@@ -186,9 +139,6 @@ if __name__ == '__main__':
 
     if noise_type == 'bonlyseen':
         detect_onlyseen_book(thr=thr, llm_type=llm_type, noise_type=noise_type,
-                             noise_ratio=noise_ratio, detection_algorithm_type=detection_algorithm_type)
-    elif noise_type == 'test':
-        detect_test_book(thr=thr, llm_type=llm_type, noise_type=noise_type,
                              noise_ratio=noise_ratio, detection_algorithm_type=detection_algorithm_type)
     else:
         detect_base_book(thr=thr, llm_type=llm_type, noise_type=noise_type,
