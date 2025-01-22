@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 # @Time : 2024/12/17 19:16 
-# @Author : DirtyBoy 
+# 
 # @File : unseen_books_detection.py
 
 from utils import read_local_file, read_joblib
