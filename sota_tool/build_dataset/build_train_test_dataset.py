@@ -17,11 +17,11 @@ def preprocess_text(text):
 
 
 def split_text_into_segments(text, min_words=512):
-    # 假设 preprocess_text 是用来预处理文本的函数
+   
     text = preprocess_text(text)
 
-    # 用正则表达式提取所有有效单词
-    words = re.findall(r'\b\w+\b', text)  # \b 是单词边界，\w+ 匹配一个或多个字母数字字符
+ 
+    words = re.findall(r'\b\w+\b', text)  
 
     segments = []
     segment = []
@@ -32,11 +32,11 @@ def split_text_into_segments(text, min_words=512):
         word_count += 1
 
         if word_count >= min_words:
-            segments.append(' '.join(segment))  # 用空格连接单词并保存
-            segment = []  # 清空当前片段
-            word_count = 0  # 重置单词计数
+            segments.append(' '.join(segment))  
+            segment = [] 
+            word_count = 0  
 
-    # 如果最后还有剩余的单词，添加到结果中
+  
     if segment:
         segments.append(' '.join(segment))
 
@@ -60,16 +60,16 @@ def random_select(train, k=1200):
     train_list = list(train)
     random_samples = random.sample(train_list, k)
     return Dataset.from_dict({
-        key: [example[key] for example in random_samples]  # 每个字段值作为列表
+        key: [example[key] for example in random_samples]
         for key in train_list[0].keys()
     })
 
 
 def convert_to_single_value(example):
-    # 将字典中的每个字段值从列表转换为单一值
+  
     for key in example:
         if isinstance(example[key], list) and len(example[key]) == 1:
-            example[key] = example[key][0]  # 取列表中的第一个元素
+            example[key] = example[key][0]
     return example
 
 
