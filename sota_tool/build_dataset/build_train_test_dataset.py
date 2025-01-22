@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 # @Time : 2024/12/20 10:30 
-# @Author : DirtyBoy 
+# 
 # @File : build_train_test_dataset.py
 from datasets import load_from_disk
 import random, os, re
