@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 # @Time : 2025/1/16 10:57 
-# @Author : DirtyBoy 
+# 
 # @File : myexp.py
 import pandas as pd
 import pickle
