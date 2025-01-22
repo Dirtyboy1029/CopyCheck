@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 # @Time : 2025/1/20 23:34 
-# @Author : DirtyBoy 
+#
 # @File : json2dataset.py
 from datasets import Dataset
 from datasets import load_from_disk
