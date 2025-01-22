@@ -74,7 +74,7 @@ Hyperparameters:
                svm: Support Vector Machine, rf: Random Forest, knn: K-Nearest Neighbors, lr: Logistic Regression
      ## noise_ratio: N_unseen.  
           no seen files: 10, 20, 30, 40.
-          few seen files: 10:4 32:13 55:22: 77:31
+          few seen files: test10: $N_unseen = 4$, test32: $N_unseen = 13$, test55: $N_unseen = 22$, test77: $N_unseen = 31$
      ## llm_type: Target LLM. llama-7b, llama2-7b, open_llama_3b, open_llama_7b
      ## thr: Empirical Threshold.
           no seen files: 0.6
