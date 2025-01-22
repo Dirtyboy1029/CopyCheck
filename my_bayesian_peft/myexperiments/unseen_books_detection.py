@@ -47,8 +47,7 @@ def detect_onlyseen_book(thr=0.6,
             unseen_book.append(item)
     label_error_mask = np.load(os.path.join(f'label_error_masks/anomaly_detection/{llm_type}',
                                             f'{detection_algorithm_type}_{noise_type}_{noise_ratio}.npy'))
-    print(list(label_error_mask))
-    print(np.sum(label_error_mask))
+   
     for i, index in enumerate(suspect_seen_index):
         if label_error_mask[i] != 0:
             noise_bookmia_data[index]['label'] = 0
