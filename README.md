@@ -4,8 +4,11 @@
 This code repository our paper titled **As If We’ve Met Before: LLMs Exhibit Certainty in Recognizing Seen Files.** In this paper, we propose a novel tool, **CopyCheck**, to detect which files in a set suspected seen files by the target LLM have actually been seen and which have not.
 
 ## Dependencies:
-We develop the codes on Windows operation system, and run the codes on Ubuntu 20.04. The runtime environment for the code is the same as that of [BLoB](https://github.com/Wang-ML-Lab/bayesian-peft). Source data:  [BookMIA](https://huggingface.co/datasets/swj0419/BookMIA)
-. You can find our dataset at `my_bayesian_peft/database`
+We develop the codes on Windows operation system, and run the codes on Ubuntu 20.04. The runtime environment for the code is the same as that of [BLoB](https://github.com/Wang-ML-Lab/bayesian-peft). 
+
+## Dependencies:
+Source data:  [BookMIA](https://huggingface.co/datasets/swj0419/BookMIA). You can find our dataset at `my_bayesian_peft/database`.
+
 ## Usage:
 
 ### 1. Estimate the target LLM uncertainty based on the BLoB project.
