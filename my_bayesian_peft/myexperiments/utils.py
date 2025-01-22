@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 # @Time : 2024/11/12 21:12 
-# @Author : DirtyBoy 
+# 
 # @File : utils.py
 import json, os, ot
 from scipy.special import softmax
