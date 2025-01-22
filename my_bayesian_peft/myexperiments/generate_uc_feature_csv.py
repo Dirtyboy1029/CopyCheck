@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 # @Time : 2024/11/12 14:00 
-# @Author : DirtyBoy 
+# 
 # @File : generate_uc_feature_csv.py
 import pandas as pd
 import os
