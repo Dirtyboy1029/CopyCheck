@@ -1,7 +1,7 @@
 # CopyCheck
 
 ## Overview:
-This code repository our paper titled **As If We’ve Met Before: LLMs Exhibit Certainty in Recognizing Seen Files.** In this paper, we propose a novel tool, **CopyCheck**, to detect which files in a set suspected seen files by the target LLM have actually been seen and which have not.
+This code repository  is associated with our paper titled **As If We’ve Met Before: LLMs Exhibit Certainty in Recognizing Seen Files.** In this paper, we propose a novel tool, **CopyCheck**, to detect which files in a set suspected seen files by the target LLM have actually been seen and which have not.
 
 ## Dependencies:
 We develop the codes on Windows operation system, and run the codes on Ubuntu 20.04. The runtime environment for the code is the same as that of [BLoB](https://github.com/Wang-ML-Lab/bayesian-peft). 
