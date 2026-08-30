@@ -35,17 +35,33 @@ We develop the codes on Windows operation system, and run the codes on Ubuntu 20
 
 ## Dataset
 
-We evaluate **CopyCheck** on three publicly available datasets covering books, Wikipedia articles, and arXiv papers:
+We evaluate **CopyCheck** on three types of publicly available datasets, covering books, Wikipedia articles, and scientific papers.
 
-* **BookMIA**: https://huggingface.co/datasets/swj0419/BookMIA
-  A benchmark for membership inference on book data.
+### BookMIA
 
-* **WikiMIA**: https://huggingface.co/datasets/swj0419/WikiMIA
-  A membership inference benchmark constructed from Wikipedia data.
+The BookMIA dataset is available at:
 
-* **ArxivMIA**: https://huggingface.co/datasets/zhliu/ArxivMIA
-  A benchmark for membership inference using scientific papers collected from arXiv.
+* [BookMIA](https://huggingface.co/datasets/swj0419/BookMIA)
 
-Please download the original datasets from the corresponding Hugging Face repositories and preprocess them according to the experimental settings described in our paper.
+BookMIA is used to evaluate file-level membership inference on book data.
+
+### WikiMIA
+
+The WikiMIA dataset is available at:
+
+* [WikiMIA](https://huggingface.co/datasets/swj0419/WikiMIA)
+
+WikiMIA contains Wikipedia-based samples for membership inference evaluation.
+
+### ArxivMIA
+
+For experiments on scientific papers, we construct the ArxivMIA benchmark using data from the following two sources:
+
+* [ArxivMIA](https://huggingface.co/datasets/zhliu/ArxivMIA)
+* [RedPajama-ArXiv Refined Dataset](https://dail-wlcb.oss-cn-wulanchabu.aliyuncs.com/LLM_data/our_refined_datasets/pretraining/redpajama-arxiv-refine-result.jsonl)
+
+These datasets are used to construct the arXiv-based experimental data for evaluating file-level membership inference across papers from different publication periods.
+
+Please download the original datasets from the corresponding sources and preprocess them according to the experimental settings described in our paper.
 
 
