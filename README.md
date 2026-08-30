@@ -1,87 +1,28 @@
 # CopyCheck
 
-## Overview:
-This code repository  is associated with our paper titled **As If We’ve Met Before: Text-Based LLMs Exhibit Greater Certainty on Seen Files.** In this paper, we propose a novel tool, **CopyCheck**, to detect which files in a set suspected seen files by the target LLM have actually been seen and which have not.
+## Overview
+
+This repository contains the implementation of **CopyCheck**, the tool proposed in our paper:
+
+> **As If We’ve Met Before: Text-Based LLMs Exhibit Greater Certainty on Seen Files**
+
+Large Language Models (LLMs) are trained on massive collections of data that may include copyrighted or otherwise sensitive materials, making it increasingly important to determine whether a particular file has been used during model training. Existing membership inference attacks (MIAs), however, often rely on labeled membership data, empirically tuned decision thresholds, or token-level confidence signals that can be unreliable due to the overconfidence of LLMs.
+
+**CopyCheck** is an uncertainty-based framework for **file-level membership inference**, aiming to determine which files in a collection of suspected training files have actually been seen by a target LLM.
+
+The key observation behind CopyCheck is that **text snippets extracted from seen files tend to exhibit lower predictive uncertainty than snippets from unseen files**. Based on this observation, CopyCheck follows a two-stage pipeline:
+
+1. **Uncertainty Extraction and File-level Representation**  
+   Each file is segmented into multiple text snippets. CopyCheck estimates the model uncertainty for each snippet and aggregates snippet-level uncertainty signals into a file-level representation.
+
+2. **Unsupervised Seen-file Detection**  
+   CopyCheck performs uncertainty-guided unsupervised clustering over file-level representations to distinguish seen files from unseen files, avoiding the need for empirically tuned decision thresholds or large-scale labeled membership data.
+
+We evaluate CopyCheck on multiple open-weight LLMs across different model families, model scales, and datasets. The results demonstrate that uncertainty signals provide an effective and generalizable indicator for detecting whether an entire file has appeared in an LLM's training data.
 
 ## Dependencies:
 We develop the codes on Windows operation system, and run the codes on Ubuntu 20.04. The runtime environment for the code is the same as that of [BLoB](https://github.com/Wang-ML-Lab/bayesian-peft). 
 
 ## Dataset:
 Source data:  [BookMIA](https://huggingface.co/datasets/swj0419/BookMIA).
-
-## Usage:
-
-### 1. Estimate the target LLM uncertainty based on the BLoB project.
-To accomplish our goal, we developed our code based on [BLoB](https://github.com/Wang-ML-Lab/bayesian-peft) and modified `bayesian_peft/run/main.py`.
-    
-     cd bayesian_peft
-     bash scripts/my_script.sh
-
-Explain the contents of `scripts/my_script.sh`.
-
-Fine-tuning target LLM:
-
-     for dataset in bookmia_bonlyseen_10 bookmia_base10_test10
-     do
-     for epoch in 1
-     do
-         CUDA_VISIBLE_DEVICES=0 python3 run/main.py --dataset-type mcdataset --dataset $dataset --model-type causallm \
-         --model openlm-research/open_llama_7b --modelwrapper mcdropout --lr 1e-4 --batch-size 4  --opt adamw --warmup-ratio 0.06 \
-         --max-seq-len 300  --nowand --load-model-path ./my_llm/openlm-research/open_llama_7b \
-         --apply-classhead-lora --lora-r 8 --lora-alpha 16 --lora-dropout 0.1  \
-          --checkpoint --checkpoint-dic-name epoch$epoch/open_llama_7b-1 --seed $epoch --n-epochs $epoch
-     done
-     done
-     
-Inference:
-
-     for dataset in bookmia_bonlyseen_10 bookmia_bonlyseen_20 bookmia_bonlyseen_30 bookmia_bonlyseen_40
-     do
-     for epoch in 1
-     do
-         CUDA_VISIBLE_DEVICES=0 python3 run/main.py --dataset-type mcdataset --dataset $dataset \
-         --ood-ori-dataset $dataset --model-type causallm --model openlm-research/open_llama_7b --modelwrapper mcdropout --lr 1e-4 \
-         --batch-size 4  --opt adamw --warmup-ratio 0.06  --max-seq-len 300 \
-         --apply-classhead-lora --lora-r 8 --lora-alpha 16  --lora-dropout 0.1\
-         --nowand --load-model-path epoch$epoch/open_llama_7b-1 --load-checkpoint
-     done
-     done
-
-Hyperparameters:
-
-     Target LLM: openlm-research/open_llama_7b, openlm-research/open_llama_3b, meta-llama/Llama-2-7b, huggyllama/llama-7b, EleutherAI/gpt-j-6b
-     dataset: 'bookmia_bonlyseen_10'  bonlyseen: no seen files,  10: $N_unseen = 10$, 20: $N_unseen = 20$, 30: $N_unseen = 30$, 40: $N_unseen = 40$
-     modelwrapper: uncertainty estimation method.
-               'mcdropout': MCD, 'blob': BLoB, 'deepensemble': Ensemble
-
-### 2. Calculation of uncertainty metrics.
-     cd my_bayesian_peft/myexperiments
-     python3 generate_uc_feature_csv.py  ## generate a uncertainty feature csv file to my_bayesian_peft/myexperiments/feature_csv
-
-### 3. Unseen file Detection.
-
-     No Seen Files:  python3 no_seen_files.py  -detection_algorithm_type gmm or hierarchical or kmeans
-
-### 4. [SOTA Tool](https://github.com/computationalprivacy/document-level-membership-inference?tab=readme-ov-file)
-#### We also modified the code and generated the feature CSV file to `sota_tool/X_feature`, the label files you can find at `sota_tool/data/final_chunks`. meta-classifier model files: `sota_tool/rf-7b.pkl` and `sota_tool/rf-3b.pkl`
-reproduce our experiment results:
-
-     cd sota_tool
-     python myexp.py
-     ## experiment_type, 'train' or 'test'.
-     ## testset: N_unseen. '10','20','30','40'.
-     ## llm_type: open_llama_3b: 3b, open_llama_7b: 7b.
-
-
-### 5. [PROB Tool](https://github.com/swj0419/detect-pretrain-code)
-reproduce our experiment results:
-
-     cd ablation
-     python my_experiments.py
-     ## detection_algorithm_type, 'gmm'.
-     ## nr: N_unseen. '10','20','30','40'.
-     ## llm_type: llama-7b, llama2-7b.
-
-
-
 
