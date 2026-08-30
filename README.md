@@ -33,6 +33,19 @@ CopyCheck first segments each candidate file into multiple text snippets and est
 ## Dependencies:
 We develop the codes on Windows operation system, and run the codes on Ubuntu 20.04. The runtime environment for the code is the same as that of [BLoB](https://github.com/Wang-ML-Lab/bayesian-peft). 
 
-## Dataset:
-Source data:  [BookMIA](https://huggingface.co/datasets/swj0419/BookMIA).
+## Dataset
+
+We evaluate **CopyCheck** on three publicly available datasets covering books, Wikipedia articles, and arXiv papers:
+
+* **BookMIA**: https://huggingface.co/datasets/swj0419/BookMIA
+  A benchmark for membership inference on book data.
+
+* **WikiMIA**: https://huggingface.co/datasets/swj0419/WikiMIA
+  A membership inference benchmark constructed from Wikipedia data.
+
+* **ArxivMIA**: https://huggingface.co/datasets/zhliu/ArxivMIA
+  A benchmark for membership inference using scientific papers collected from arXiv.
+
+Please download the original datasets from the corresponding Hugging Face repositories and preprocess them according to the experimental settings described in our paper.
+
 
