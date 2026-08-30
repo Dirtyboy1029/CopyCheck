@@ -20,6 +20,16 @@ The key observation behind CopyCheck is that **text snippets extracted from seen
 
 We evaluate CopyCheck on multiple open-weight LLMs across different model families, model scales, and datasets. The results demonstrate that uncertainty signals provide an effective and generalizable indicator for detecting whether an entire file has appeared in an LLM's training data.
 
+## Framework
+
+The overall workflow of **CopyCheck** is illustrated below.
+
+<p align="center">
+  <img src="framework.png" width="90%">
+</p>
+
+CopyCheck first segments each candidate file into multiple text snippets and estimates uncertainty for each snippet using the target LLM. The snippet-level uncertainty measurements are then aggregated into file-level representations, which are subsequently analyzed using unsupervised clustering to identify seen and unseen files.
+
 ## Dependencies:
 We develop the codes on Windows operation system, and run the codes on Ubuntu 20.04. The runtime environment for the code is the same as that of [BLoB](https://github.com/Wang-ML-Lab/bayesian-peft). 
 
