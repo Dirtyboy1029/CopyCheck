@@ -30,8 +30,12 @@ The overall workflow of **CopyCheck** is illustrated below.
 
 CopyCheck first segments each candidate file into multiple text snippets and estimates uncertainty for each snippet using the target LLM. The snippet-level uncertainty measurements are then aggregated into file-level representations, which are subsequently analyzed using unsupervised clustering to identify seen and unseen files.
 
-## Dependencies:
-We develop the codes on Windows operation system, and run the codes on Ubuntu 20.04. The runtime environment for the code is the same as that of [BLoB](https://github.com/Wang-ML-Lab/bayesian-peft). 
+## Dependencies
+
+Our implementation is developed based on the codebase of [BLoB](https://github.com/Wang-ML-Lab/bayesian-peft), which provides the underlying implementation for uncertainty estimation.
+
+We develop the code on **Windows** and run the experiments on **Ubuntu 20.04**. The runtime environment and major dependencies are consistent with those used by BLoB. Please refer to the [BLoB repository](https://github.com/Wang-ML-Lab/bayesian-peft) for detailed environment configuration and dependency installation.
+
 
 ## Dataset
 
